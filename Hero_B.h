@@ -8,6 +8,6 @@ public:
 	static const int kRadius = 16;
 private:
 	float posX_,posY_,speed;
-	int deathTime;
-	bool death = false;
+	int deathTime;//クールタイム
+	bool death = false;//フラグ
 };

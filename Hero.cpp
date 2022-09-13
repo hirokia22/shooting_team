@@ -8,8 +8,9 @@ void Hero::Initialize() {
 	move = true;
 	HP = 100;
 	heroTimer = 1800.0f;
+	shotTimer = 60.0f;
 }
-void Hero::Update(int* key) {
+void Hero::Update(char* key) {
 	heroTimer--;
 	if (heroTimer <= 0) {
 		if (move == true) {
@@ -22,12 +23,13 @@ void Hero::Update(int* key) {
 	}
 	if (move == true) {
 		Manual(key);
+		Shot(key);
 	}
 	else if (move == false) {
 		Auto();
 	}
 }
-void Hero::Manual(int* key) {
+void Hero::Manual(char* key) {
 	if (key[KEY_INPUT_A]) {
 		posX -= speed;
 	}
@@ -40,25 +42,35 @@ void Hero::Manual(int* key) {
 	else if (key[KEY_INPUT_S]) {
 		posY += speed;
 	}
+
 }
 void Hero::Auto() {
 	//à⁄ìÆ
-	posX++;
-	
-
+	posX+=speed;
+	if ((posX <= 0) || (posX >= 600) ){
+		speed = -speed;
+	}
+	AutoShot();
 }
 
-void Hero::Shot(int *key) {
+void Hero::Shot(char *key) {
 	if (key[KEY_INPUT_SPACE]) {
 		//íeÇê∂ê¨ÇµÅAèâä˙âª
 		std::unique_ptr<Hero_B> newBullet = std::make_unique<Hero_B>();
-		newBullet->Initialize();
+		newBullet->Initialize(posX,posY);
 		
 		bullets_.push_back(std::move(newBullet));
 	}
 }
 void Hero::AutoShot() {
+	if (--shotTimer <= 0) {
+		//íeÇê∂ê¨ÇµÅAèâä˙âª
+		std::unique_ptr<Hero_B> newBullet = std::make_unique<Hero_B>();
+		newBullet->Initialize(posX, posY);
 
+		bullets_.push_back(std::move(newBullet));
+		shotTimer = 60.0f;
+	}
 }
 
 void Hero::Draw() {

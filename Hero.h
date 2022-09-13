@@ -14,7 +14,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(int* key);
+	void Update(char* key);
 
 	/// <summary>
 	/// 描画
@@ -29,10 +29,10 @@ public:
 	/// <summary>
 	/// 手動
 	/// </summary>
-	void Manual(int* key);
+	void Manual(char* key);
 
-	void Shot(int *key);
-	void AutoShot();
+	void Shot(char *key);	//了
+	void AutoShot();		//了
 
 	void OnCollision();
 	
@@ -40,11 +40,10 @@ public:
 	const std::list<std::unique_ptr<Hero_B>>& GetBullet() { return bullets_; }
 private:
 	float posX, posY, speed;
-	bool death = false;
-	bool move = false;
+	bool death = false;//生存フラグ
+	bool move = false;//行動フラグ
 	int HP;
-	float lim;
 	float heroTimer;
-
+	float shotTimer;
 	std::list<std::unique_ptr<Hero_B>> bullets_;
 };

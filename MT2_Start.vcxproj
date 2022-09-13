@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -139,6 +139,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy_B.cpp" />
+    <ClCompile Include="Meteo.cpp" />
+    <ClCompile Include="unknown.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -146,6 +148,8 @@
     <ClInclude Include="Hero_B.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy_B.h" />
+    <ClInclude Include="Meteo.h" />
+    <ClInclude Include="unknown.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
