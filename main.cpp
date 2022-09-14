@@ -1,5 +1,5 @@
 #include "DxLib.h"
-#include "Meteo.h"
+#include "unknown.h"
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "xx2x_xx_ナマエ: タイトル";
 
@@ -7,7 +7,7 @@ const char TITLE[] = "xx2x_xx_ナマエ: タイトル";
 const int WIN_WIDTH = 640;
 
 // ウィンドウ縦幅
-const int WIN_HEIGHT = 960;
+const int WIN_HEIGHT = 800;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
                    _In_ int nCmdShow) {
@@ -40,7 +40,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	// ゲームループで使う変数の宣言
-	meteo* meteo_ = new meteo;
+	unknown* unknown_ = new unknown;
 
 	// 最新のキーボード情報用
 	char keys[256] = {0};
@@ -59,10 +59,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		meteo_->meteoFall();
+		unknown_->Update();
 
 		// 描画処理
-
+		unknown_->Draw();
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
 		ScreenFlip();
@@ -82,7 +82,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	}
 	// Dxライブラリ終了処理
 	DxLib_End();
-	delete meteo_;
+	delete unknown_;
 	// 正常終了
 	return 0;
 }

@@ -1,11 +1,14 @@
 #pragma once
-class EnemyBullet {
-private:
-	void Initialize();
-	void Shot_M();
-	void Shot_A();
-	void Draw();
+class Enemy_B {
 public:
-	float posX, posY, speed;
-	bool death = false;
+	void Initialize(float& posX, float& posY);
+	void Update();
+	void Draw();
+	void OnCollision();
+	static const int kRadius = 16;
+	bool IsDead()const { return isDead_; }
+private:
+	float posX_, posY_, speed;
+	int deathTime;//クールタイム
+	bool isDead_ = false;//フラグ
 };

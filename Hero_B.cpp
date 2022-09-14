@@ -4,18 +4,17 @@ void Hero_B::Initialize(float& posX,float& posY) {
 	posX_= posX;
 	posY_ = posY;
 	speed = 5.0f;
-	deathTime = 200;
-	death = false;
+	isDead_ = false;
 }
 void Hero_B::Update() {
 	posY_ -= speed;
-	if (--deathTime <= 0) {
-		death = true;
+	if (posY_ <= 0) {
+		isDead_ = true;
 	}
 }
 void Hero_B::Draw() {
 
 }
 void Hero_B::OnCollision() {
-	death = true;
+	isDead_ = true;
 }

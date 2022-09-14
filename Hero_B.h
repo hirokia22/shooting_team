@@ -6,8 +6,10 @@ public:
 	void Draw();
 	void OnCollision();
 	static const int kRadius = 16;
+	bool IsDead()const { return isDead_; }
 private:
 	float posX_,posY_,speed;
 	int deathTime;//クールタイム
-	bool death = false;//フラグ
+	bool isDead_ = false;//フラグ
+
 };
