@@ -1,19 +1,21 @@
 #include "Hero.h"
 #include"DxLib.h"
+
+Hero::Hero() {}
+Hero::~Hero() {}
 void Hero::Initialize() {
-	posX = 320.0f;
+	posX = 300.0f;
 	posY = 640.0f;
 	speed_M = 2.0f;
 	speed_A = 2.0f;
-	HP = 100;
-	heroTimer = 1800.0f;
+	HP = 3;
 	shotTimer = 60.0f;
-	animeTime = 0;
-	index = 0;
+	heromode = 1;
+	shotTimerM = 30.0f;
 }
-void Hero::Update(char* key,bool &moveFlag) {
+void Hero::Update(char* key,bool& moveFlag) {
 	//デスフラグのたった弾を削除
-	bullets_.remove_if([](std::unique_ptr<Hero_B>& bullet) {
+	Hbullets_.remove_if([](std::unique_ptr<Hero_B>& bullet) {
 		return bullet->IsDead();
 		});
 	if (moveFlag == true) {
@@ -24,18 +26,22 @@ void Hero::Update(char* key,bool &moveFlag) {
 		Auto();
 	}
 	//弾の更新処理
-	for (std::unique_ptr<Hero_B>& bullet : bullets_) {
+	for (std::unique_ptr<Hero_B>& bullet : Hbullets_) {
 		bullet->Update();
+	}
+	if (HP <= 0) {
+		heromode = 0;
 	}
 }
 void Hero::Manual(char* key) {
-	if (key[KEY_INPUT_A]) {
-		posX -= speed_M;
+	if (posX >= 0 && posX <= 600) {
+		if (key[KEY_INPUT_A]) {
+			posX -= speed_M;
+		}
+		else if (key[KEY_INPUT_D]) {
+			posX += speed_M;
+		}
 	}
-	else if (key[KEY_INPUT_D]) {
-		posX += speed_M;
-	}
-
 }
 void Hero::Auto() {
 	//移動
@@ -47,12 +53,18 @@ void Hero::Auto() {
 }
 
 void Hero::Shot(char *key) {
-	if (key[KEY_INPUT_SPACE]) {
-		//弾を生成し、初期化
-		std::unique_ptr<Hero_B> newBullet = std::make_unique<Hero_B>();
-		newBullet->Initialize(posX,posY);
-		
-		bullets_.push_back(std::move(newBullet));
+	if (shotTimerM >= 0) {
+		shotTimerM--;
+	}
+	if (shotTimerM <= 0) {
+		if (key[KEY_INPUT_SPACE]) {
+			//弾を生成し、初期化
+			std::unique_ptr<Hero_B> newBullet = std::make_unique<Hero_B>();
+			newBullet->Initialize(posX, posY);
+
+			Hbullets_.push_back(std::move(newBullet));
+			shotTimerM = 30.0f;
+		}
 	}
 }
 void Hero::AutoShot() {
@@ -61,21 +73,18 @@ void Hero::AutoShot() {
 		std::unique_ptr<Hero_B> newBullet = std::make_unique<Hero_B>();
 		newBullet->Initialize(posX, posY);
 
-		bullets_.push_back(std::move(newBullet));
+		Hbullets_.push_back(std::move(newBullet));
 		shotTimer = 60.0f;
 	}
 }
 
 void Hero::Draw() {
-	animeTime++;
-	if (animeTime >= 6)
-	{
-		index = (index + 1) % 4;
-
-		animeTime = 0;
-
+	DrawGraph(posX, posY, heroGraph, TRUE);
+	for (std::unique_ptr<Hero_B>& bullet : Hbullets_) {
+		bullet->Draw();
 	}
-	DrawGraph(posX, posY, heroGraph[&index], TRUE);
-
-
+	DrawFormatString(0, 0, GetColor(111, 111, 111), "%f,%f", posX, posY, true);
+}
+void Hero::OnCollision() {
+	HP--;
 }

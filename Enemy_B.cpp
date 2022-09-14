@@ -13,7 +13,7 @@ void Enemy_B::Update() {
 	}
 }
 void Enemy_B::Draw() {
-
+	DrawGraph(posX_, posY_, bulletGraph, true);
 }
 void Enemy_B::OnCollision() {
 	isDead_ = true;

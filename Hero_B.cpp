@@ -13,7 +13,7 @@ void Hero_B::Update() {
 	}
 }
 void Hero_B::Draw() {
-
+	DrawGraph(playerBulletGraph, posX_, posY_, true);
 }
 void Hero_B::OnCollision() {
 	isDead_ = true;

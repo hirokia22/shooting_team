@@ -1,5 +1,8 @@
 #include "unknown.h"
 #include"DxLib.h"
+
+unknown::unknown(){}
+unknown::~unknown(){}
 void unknown::Initialize() {
 	posX = 16;
 	posY = -32;

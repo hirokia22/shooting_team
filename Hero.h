@@ -2,10 +2,11 @@
 #include"Hero_B.h"
 #include<memory>
 #include<list>
-#include"DxLib.h"
 //主人公の機体
 class Hero {
 public:
+	Hero();
+	~Hero();
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -14,7 +15,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(char* key,bool &moveFlag);
+	void Update(char* key, bool& moveFlag);
 
 	/// <summary>
 	/// 描画
@@ -31,20 +32,26 @@ public:
 	/// </summary>
 	void Manual(char* key);
 
-	void Shot(char *key);	//了
+	void Shot(char* key);	//了
 	void AutoShot();		//了
 
 	void OnCollision();
-	
+
 	//弾リストを取得
-	const std::list<std::unique_ptr<Hero_B>>& GetBullet() { return bullets_; }
-private:
-	float posX, posY, speed_M,speed_A;
-	int HP;
-	float heroTimer;
-	float shotTimer;
-	std::list<std::unique_ptr<Hero_B>> bullets_;
-	int heroGraph = LoadDivGraph("Resource/player_anime32.png", 4, 4, 1, 32, 32, &heroGraph);
+	const std::list<std::unique_ptr<Hero_B>>& GetBullet() { return Hbullets_; }
+public:
+	float posX = 0;
+	float posY = 0;
+	float speed_M = 0;
+	float speed_A = 0;
+	int HP= 3;
+	float heroTimer=0;
+	float shotTimer=0;
+	float shotTimerM = 30.0f;
+	std::list<std::unique_ptr<Hero_B>> Hbullets_;
+	int heroGraph = LoadGraph("Resource/player.png",true);
 	int animeTime = 0;
 	int index = 0;
+	float radius = 16.0f;
+	int heromode = 1;
 };

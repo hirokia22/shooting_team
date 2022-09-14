@@ -14,3 +14,6 @@ void meteo::meteoFall() {
 void meteo::Draw() {
 	DrawGraph(posX_, posY_, meteoGraph, true);
 }
+void meteo::OnCollision() {
+	isDead_ = true;
+}
